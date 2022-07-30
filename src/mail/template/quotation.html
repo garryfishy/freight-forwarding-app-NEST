@@ -1,0 +1,714 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="x-apple-disable-message-reformatting" />
+    <link rel="stylesheet" type="text/css"
+    href=https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
+    rel="stylesheet" />
+    <title>Andalin</title>
+    <style type="text/css">
+      * {
+        font-family: "Open Sans" !important;
+        line-height: 21px
+      }
+      p,
+      b {
+        margin: 0 !important;
+      }
+      .wrapper {
+        max-width: 700px;
+        margin: 0 auto;
+        background-color: #ffffff !important;
+        border: 1px solid #e0e0e0;
+      }
+      .wrapper__top {
+        max-width: 600px;
+        width: 600px;
+        margin: 0 auto;
+        background-color: #ffffff !important;
+        padding: 12.5px 0px;
+      }
+      .table_rfq {
+        background-color: #f0f3ff;
+        max-width: 600px;
+        width: 600px;
+        border-radius: 6px;
+      }
+      .table_rfq p {
+        font-family: "Open Sans";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 20px;
+        letter-spacing: -0.006em;
+      }
+      .table_price {
+        max-width: 600px;
+        width: 600px;
+      }
+      .table_price td {
+        padding-left: 16px;
+        background-color: white;
+        border-bottom: 1px solid #dcdcdc;
+        font-family: "Open Sans";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 10px;
+        line-height: 16px;
+        color: #4a4b4c;
+      }
+      .table_price th {
+        padding-left: 16px;
+        border-bottom: 1px solid #4a4b4c;
+      }
+    </style>
+  </head>
+  <body>
+    <table
+      class="wrapper"
+      align="center"
+      role="presentation"
+      cellspacing="0"
+      cellpadding="0"
+    >
+      <tr>
+        <td align="center">
+          <table
+            class="wrapper__top"
+            align="center"
+            role="presentation"
+            cellspacing="0"
+            cellpadding="0"
+            border="0"
+          >
+            <tr>
+              <td style="width: 65%; padding-left: 22px">
+                <img style="width: 25%;"src="{{company.logo}}" alt="Company logo"></td>
+              <td style="text-align: center; padding-right: 16px">
+                <p
+                  style="
+                    background-color: #f0f3ff;
+                    color: #3267e3;
+                    font-size: 16px !important;
+                    line-height: 19.36px !important;
+                    font-weight: 700;
+                    padding: 12px 24px;
+                    border-radius: 6px;
+                  "
+                >
+                  QUOTATION
+                </p>
+              </td>
+            </tr>
+            <tr
+              style="
+                font-weight: 400;
+                font-size: 12px;
+                line-height: 20px;
+                letter-spacing: -0.6%;
+              "
+            >
+            
+              <td style="padding-left: 16px">
+                <p style="color: black"">{{company.name}}</p>
+                <p style="color: black"">{{company.address}}</p>
+                <p style="color: black"">NPWP : {{company.npwp}}</p>
+              </td>
+              <td style="color: black"> <p style="color: black"">Company : {{customer.companyName}}</p>
+                <p style="color: black">PIC : {{customer.fullName}}</p></td>
+            </tr>
+            <tr
+              style="
+                font-weight: 400;
+                font-size: 12px;
+                line-height: 20px;
+                letter-spacing: -0.6%;
+              "
+            >
+              <td style="padding-left: 16px"></td>
+              <td style="color: black"></td>
+            </tr>
+            <tr
+              style="
+                font-weight: 400;
+                font-size: 12px;
+                line-height: 20px;
+                letter-spacing: -0.6%;
+              "
+            >
+              <td style="padding-left: 16px"></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding: 0px 16px 1px 16px">
+          <p style="height: 7px; background-color: #3267e3"></p>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding: 0px 16px 1px 16px">
+          <p style="height: 1px; background-color: #3267e3"></p>
+        </td>
+      </tr>
+      <tr style="padding-bottom: 100px">
+        <td align="center" style="padding: 16px 16px 1px 16px">
+          <table
+            class="table_rfq"
+            role="presentation"
+            cellspacing="0"
+            cellpadding="0"
+            border="0"
+          >
+            <thead>
+              <tr>
+                <p
+                  style="
+                    width: 150%;
+                    padding-top: 50px;
+                    background-color: #f0f3ff;
+                    border-top-left-radius: 6px;
+                    border-top-right-radius: 6px;
+                    color: #3267e3;
+                    font-family: Open Sans;
+                    font-size: 12px;
+                    font-weight: 600;
+                    line-height: 20px;
+                    letter-spacing: -0.006em;
+                    text-align: left;
+                    padding: 7px 16px;
+                  "
+                >
+                  RFQ Number : {{rfqNumber}}
+                </p>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td
+                  style="
+                    width: 30%;
+                    padding-top: 12px;
+                    padding-left: 12px;
+                    border-left: #f0f3ff solid 4px;
+                    background-color: white;
+                    border-bottom-left-radius: 6px;
+                    vertical-align: top;
+                  "
+                >
+                  <p style="color: black"">Shipment Date</p>
+                </td>
+                <td
+                  style="
+                    padding-top: 12px;
+                    padding-left: 12px;
+                    background-color: white;
+                    vertical-align: top;
+                    border-right: #f0f3ff solid 4px;
+                  "
+                >
+                  <p style="color: black"">: {{ shipmentDate }}</p>
+                </td>
+              </tr>
+              <tr>
+                <td
+                  style="
+                    width: 30%;
+                    padding-left: 12px;
+                    border-left: #f0f3ff solid 4px;
+                    background-color: white;
+                    border-bottom-left-radius: 6px;
+                    vertical-align: top;
+                  "
+                >
+                  <p style="color: black"">Shipment Service</p>
+                </td>
+                <td
+                  style="
+                    padding-left: 12px;
+                    background-color: white;
+                    vertical-align: top;
+                    border-right: #f0f3ff solid 4px;
+                  "
+                >
+                  <p style="color: black"">: {{ shipmentService }}</p>
+                </td>
+              </tr>
+              <tr>
+                <td
+                  style="
+                    width: 30%;
+                    padding-left: 12px;
+                    border-left: #f0f3ff solid 4px;
+                    background-color: white;
+                    border-bottom-left-radius: 6px;
+                    vertical-align: top;
+                  "
+                >
+                  <p style="color: black"">Origin Country</p>
+                </td>
+                <td
+                  style="
+                    padding-left: 12px;
+                    background-color: white;
+                    border-right: #f0f3ff solid 4px;
+                    vertical-align: top;
+                  "
+                >
+                  <p style="color: black"">: {{ countryFrom }}</p>
+                </td>
+              </tr>
+              <tr>
+                <td
+                  style="
+                    width: 30%;
+                    padding-left: 12px;
+                    border-left: #f0f3ff solid 4px;
+                    background-color: white;
+                    border-bottom-left-radius: 6px;
+                    vertical-align: top;
+                  "
+                >
+                  <p style="color: black"">Origin City</p>
+                </td>
+                <td
+                  style="
+                    padding-left: 12px;
+                    border-right: #f0f3ff solid 4px;
+                    background-color: white;
+                    vertical-align: top;
+                  "
+                >
+                  <p style="color: black"">: {{ cityFrom }}</p>
+                </td>
+              </tr>
+              <tr>
+                <td
+                  style="
+                    width: 30%;
+                    padding-left: 12px;
+                    border-left: #f0f3ff solid 4px;
+                    background-color: white;
+                    border-bottom-left-radius: 6px;
+                    vertical-align: top;
+                  "
+                >
+                  <p style="color: black"">Pick Up Address</p>
+                </td>
+                <td
+                  style="
+                    padding-left: 12px;
+                    background-color: white;
+                    border-right: #f0f3ff solid 4px;
+                    vertical-align: top;
+                  "
+                >
+                  <p style="color: black"">: {{ addressFrom }}</p>
+                </td>
+              </tr>
+              <tr>
+                <td
+                  style="
+                    width: 30%;
+                    padding-left: 12px;
+                    border-left: #f0f3ff solid 4px;
+                    background-color: white;
+                    border-bottom-left-radius: 6px;
+                    vertical-align: top;
+                  "
+                >
+                  <p style="color: black"">Destination Country</p>
+                </td>
+                <td
+                  style="
+                    padding-left: 12px;
+                    background-color: white;
+                    border-right: #f0f3ff solid 4px;
+                    vertical-align: top;
+                  "
+                >
+                  <p style="color: black"">: {{ countryTo }}</p>
+                </td>
+              </tr>
+              <tr>
+                <td
+                  style="
+                    width: 30%;
+                    padding-left: 12px;
+                    border-left: #f0f3ff solid 4px;
+                    background-color: white;
+                    border-bottom-left-radius: 6px;
+                    vertical-align: top;
+                  "
+                >
+                  <p style="color: black"">Destination City</p>
+                </td>
+                <td
+                  style="
+                    padding-left: 12px;
+                    background-color: white;
+                    border-right: #f0f3ff solid 4px;
+                    vertical-align: top;
+                  "
+                >
+                  <p style="color: black"">: {{ cityTo }}</p>
+                </td>
+              </tr>
+              <tr>
+                <td
+                  style="
+                    width: 30%;
+                    padding-left: 12px;
+                    border-left: #f0f3ff solid 4px;
+                    background-color: white;
+                    border-bottom-left-radius: 6px;
+                    vertical-align: top;
+                  "
+                >
+                  <p style="color: black"">Delivery Address</p>
+                </td>
+                <td
+                  style="
+                    padding-left: 12px;
+                    border-right: #f0f3ff solid 4px;
+                    background-color: white;
+                    vertical-align: top;
+                  "
+                >
+                  <p style="color: black"">: {{ addressTo }}</p>
+                </td>
+              </tr>
+              <tr>
+                <td
+                  style="
+                    width: 30%;
+                    padding-left: 12px;
+                    border-left: #f0f3ff solid 4px;
+                    background-color: white;
+                    border-bottom-left-radius: 6px;
+                    vertical-align: top;
+                  "
+                >
+                  <p style="color: black"">Freight Mode</p>
+                </td>
+                <td
+                  style="
+                    padding-left: 12px;
+                    border-right: #f0f3ff solid 4px;
+                    background-color: white;
+                    vertical-align: top;
+                  "
+                >
+                  <p style="color: black"">: {{ shipmentVia }}</p>
+                </td>
+              </tr>
+              <tr>
+                <td
+                  style="
+                    width: 30%;
+                    padding-left: 12px;
+                    border-left: #f0f3ff solid 4px;
+                    background-color: white;
+                    border-bottom-left-radius: 6px;
+                    vertical-align: top;
+                  "
+                >
+                  <p style="color: black"">Shipment Type</p>
+                </td>
+                <td
+                  style="
+                    padding-left: 12px;
+                    border-right: #f0f3ff solid 4px;
+                    background-color: white;
+                    vertical-align: top;
+                  "
+                >
+                  <p style="color: black"">: {{ shipmentType }}</p>
+                </td>
+              </tr>
+              <tr>
+                <td
+                  style="
+                    width: 30%;
+                    padding-left: 12px;
+                    border-left: #f0f3ff solid 4px;
+                    background-color: white;
+                    border-bottom-left-radius: 6px;
+                    vertical-align: top;
+                  "
+                >
+                  <p style="color: black"">Total Package Quantity</p>
+                </td>
+                <td
+                  style="
+                    padding-left: 12px;
+                    border-right: #f0f3ff solid 4px;
+                    background-color: white;
+                    vertical-align: top;
+                  "
+                >
+                  <p style="color: black"">: {{totalQty}}</p>
+                </td>
+              </tr>
+              <tr>
+                <td
+                  style="
+                    width: 30%;
+                    padding-left: 12px;
+                    border-left: #f0f3ff solid 4px;
+                    background-color: white;
+                    border-bottom-left-radius: 6px;
+                    vertical-align: top;
+                  "
+                >
+                  <p style="color: black"">Volumetric</p>
+                </td>
+                <td
+                  style="
+                    padding-left: 12px;
+                    border-right: #f0f3ff solid 4px;
+                    background-color: white;
+                    vertical-align: top;
+                  "
+                >
+                  <p style="color: black"">: {{volumetric}} CBM </p>
+                </td>
+              </tr>
+              <tr>
+                <td
+                  style="
+                    width: 30%;
+                    padding-left: 12px;
+                    padding-bottom: 12px;
+                    border-left: #f0f3ff solid 4px;
+                    border-bottom: #f0f3ff solid 4px;
+                    background-color: white;
+                    border-bottom-left-radius: 6px;
+                    vertical-align: top;
+                  "
+                >
+                  <p style="color: black"">Total Weight</p>
+                </td>
+                <td
+                  style="
+                    padding-left: 12px;
+                    padding-bottom: 12px;
+                    border-right: #f0f3ff solid 4px;
+                    border-bottom: #f0f3ff solid 4px;
+                    background-color: white;
+                    vertical-align: top;
+                  "
+                >
+                  <p style="color: black"">: {{estimatedTotalWeight}} Kg</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr style="padding-bottom: 100px">
+        <td align="center" style="padding: 16px 16px 1px 16px">
+          <table
+            class="table_rfq"
+            role="presentation"
+            cellspacing="0"
+            cellpadding="0"
+            border="0"
+          >
+            <thead>
+              <tr>
+                <p
+                  style="
+                    padding-top: 50px;
+                    border-top-left-radius: 6px;
+                    border-top-right-radius: 6px;
+                    font-family: Open Sans;
+                    font-size: 12px;
+                    font-weight: 600;
+                    line-height: 20px;
+                    letter-spacing: -0.006em;
+                    text-align: left;
+                    padding: 7px 0px;
+                    padding-left: 12px;
+                    color: black
+                  "
+                >
+                  Quotation Details
+                </p>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td
+                  style="
+                    width: 30%;
+                    padding: 12px;
+                    border-top: #ecf1f5 solid 1px;
+                    border-left: #ecf1f5 solid 1px;
+                    border-bottom: #ecf1f5 solid 1px;
+                    background-color: white;
+                    vertical-align: top;
+                    border-top-left-radius: 5px;
+                    border-bottom-left-radius: 5px;
+                  "
+                >
+                  <p style="color: black"">Airline</p>
+                </td>
+                <td
+                  style="
+                    padding: 12px;
+                    background-color: white;
+                    border-top: #ecf1f5 solid 1px;
+                    border-bottom: #ecf1f5 solid 1px;
+                    vertical-align: top;
+                  "
+                >
+                  :
+                </td>
+                <td
+                  style="
+                    padding: 12px;
+                    background-color: white;
+                    border-top: #ecf1f5 solid 1px;
+                    border-bottom: #ecf1f5 solid 1px;
+                    vertical-align: top;
+                  "
+                >
+                  <p style="color: black"">{{ bid.shippingLine }}</p>
+                </td>
+                <td
+                  style="
+                    padding: 12px;
+                    background-color: white;
+                    border-top: #ecf1f5 solid 1px;
+                    border-bottom: #ecf1f5 solid 1px;
+                    vertical-align: top;
+                  "
+                >
+                  <p style="color: black"">Vendor</p>
+                </td>
+                <td
+                  style="
+                    padding: 12px;
+                    background-color: white;
+                    border-top: #ecf1f5 solid 1px;
+                    border-bottom: #ecf1f5 solid 1px;
+                    vertical-align: top;
+                  "
+                >
+                  :
+                </td>
+                <td
+                  style="
+                    padding: 12px;
+                    border-right: #f0f3ff solid 1px;
+                    border-top: #ecf1f5 solid 1px;
+                    border-bottom: #ecf1f5 solid 1px;
+                    background-color: white;
+                    border-top-right-radius: 5px;
+                    border-bottom-right-radius: 5px;
+                    vertical-align: top;
+                  "
+                >
+                  <p style="color: black"">{{ bid.vendorName }}</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr style="padding-bottom: 100px">
+        <td align="center" style="padding: 16px 16px 1px 16px">
+          <table
+            class="table_price"
+            role="presentation"
+            cellspacing="0"
+            cellpadding="0"
+            border="0"
+          >
+            <thead
+              style="
+                color: #4a4b4c;
+                font-family: 'Open Sans';
+                font-style: normal;
+                font-weight: 700;
+                line-height: 20px;
+                letter-spacing: -0.006em;
+                text-align: left;
+              "
+            >
+              <tr style="font-size: 12px">
+                <th style="color: black; width: 50px">Price Component</th>
+                <th style="color: black; width: 50px">Price in IDR</th>
+                <th style="color: black; width: 50px">UOM</th>
+                <th style="color: black; width: 150px">Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#bid.bidprices}}
+              <tr>
+                <td style="color: black; font-size: 10px">{{ priceCompName }}</td>
+                <td style="color: black; font-size: 10px">{{ price }}</td>
+                <td style="color: black; font-size: 10px">{{ uom }}</td>
+                <td style="color: black; font-size: 10px">{{ note }}</td>
+              </tr>
+              {{/bid.bidprices}}
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr style="padding-bottom: 100px">
+        <td align="center" style="padding: 16px 16px 1px 16px">
+          <table
+            style="background-color: #f0f3ff; max-width: 600px; width: 600px"
+            role="presentation"
+            cellspacing="0"
+            cellpadding="0"
+            border="0"
+          >
+            <thead>
+              <tr>
+                <p
+                  style="
+                    padding-top: 20px;
+                    font-family: 'Open Sans';
+                    font-style: normal;
+                    color: black;
+                    font-weight: 700;
+                    font-size: 10px;
+                    line-height: 16px;
+                    text-align: left;
+                    background-color: white;
+                    padding: 0px 32px;
+                  "
+                >
+                  Note for Quotation : {{bid.note}}
+                </p>
+              </tr>
+            </thead>
+            <tbody></tbody>
+            <tr>
+              <td style="background-color: white">
+                <ul
+                  style="
+                    font-family: 'Open Sans';
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 10px;
+                    line-height: 16px;
+                  "
+                >
+                  {{#quotationNote}}
+                  <li style="color: black">{{.}}</li>
+                  {{/quotationNote}}
+                </ul>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

@@ -1,0 +1,113 @@
+name: Deploy Saas External BE to Server
+
+on:
+  push:
+    branches: [dev, uat, staging, sandbox, testing, demo, prod]
+
+  workflow_dispatch:
+    inputs:
+      choice:
+        type: choice
+        description: Deploy to
+        options:
+          - dev
+          - uat
+          - staging
+          - sandbox
+          - testing
+          - demo
+          - prod
+
+env:
+  SERVER: SERVER
+  SRC_DIR: ${PWD}/*
+  DEST_DIR: ~/apps/saas-external-backend
+  APP_NAME: APP_NAME
+  BRANCH_NAME: BRANCH_NAME
+  DEPLOY_ENV: ${{ github.event.inputs.choice }}
+  TITLE_LINK: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+  SERVER_KEY: ${{ secrets.SERVER_KEY_NON_PROD }}
+  COMMIT_MESSAGE: ${{ github.event.commits[0].message }}
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Set BRANCH
+        run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+      - name: Set Deployment ENV
+        if: ${{ env.DEPLOY_ENV == null }}
+        run: echo "DEPLOY_ENV=$BRANCH_NAME" >> $GITHUB_ENV
+      - name: set ENV
+        env:
+          SERVER_dev: devserversaas.andalin.com
+          SERVER_uat: uatserversaas.andalin.com
+          SERVER_staging: stagingserversaas.andalin.com
+          SERVER_sandbox: sandboxserversaas.andalin.com
+          SERVER_testing: testingserversaas.andalin.com
+          SERVER_demo: demoserversaas.andalin.com
+          SERVER_prod: liveexternalsaasbeserver.andalin.com
+          APP_NAME_dev: dev-saas-external-backend
+          APP_NAME_uat: uat-saas-external-backend
+          APP_NAME_staging: staging-saas-external-backend
+          APP_NAME_sandbox: sandbox-saas-external-backend
+          APP_NAME_testing: testing-saas-external-backend
+          APP_NAME_demo: demo-saas-external-backend
+          APP_NAME_prod: prod-saas-external-backend
+        run: |
+          echo "SERVER=${{ env[format('SERVER_{0}', env.DEPLOY_ENV)] }}" >> $GITHUB_ENV
+          echo "APP_NAME=${{ env[format('APP_NAME_{0}', env.DEPLOY_ENV)] }}" >> $GITHUB_ENV
+          echo "COMMIT_MESSAGE=$(echo $COMMIT_MESSAGE | sed 's/\"/\\"/g')" >> $GITHUB_ENV
+      - name: Send notification to Slack
+        run: |
+          curl -X POST -H 'content-type: application/json' \
+          --data '{"attachments":[{"title":"Deployment Started !  :amongus_green_run:","title_link":"${{ env.TITLE_LINK }}","color":"#006DCC","author_name":"${{ github.actor }}","fields":[{"title":"Repository","value":"${{ github.event.repository.name }}","short":true},{"title":"Branch","value":"${{ env.BRANCH_NAME }}","short":true},{"title":"Deployed To","value":"${{ env.DEPLOY_ENV }}","short":true}],"mrkdwn_in":["text","fields"],"text":"${{ env.COMMIT_MESSAGE }}"}]}' \
+          ${{ secrets.SLACK_WEBHOOK }}
+      - name: set key production
+        if: ${{ github.ref == 'refs/heads/prod' }}
+        run: |
+          echo "SERVER_KEY<<END" >> $GITHUB_ENV
+          echo "${{ secrets.SERVER_KEY_PROD }}" >> $GITHUB_ENV
+          echo "END" >> $GITHUB_ENV
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.BASTION_KEY }}" > ~/.ssh/id_rsa
+          echo "$SERVER_KEY" > ~/.ssh/id_rsa.server
+          chmod 600 ~/.ssh/id_rsa*
+          cat>>~/.ssh/config<<END
+          User ${{ secrets.SSH_USER }}
+          StrictHostKeyChecking no
+          Host $SERVER
+            HostName $SERVER
+            IdentityFile ~/.ssh/id_rsa.server
+          END
+          echo =========================
+      - uses: actions/checkout@v2
+      - name: Build
+        run: |
+          npm ci
+          npm run build
+      - name: Deploy to Server
+        run: |
+          rsync -azP --checksum --size-only --delete -e "ssh -A -J ${{ secrets.BASTION }}" --include='**.gitignore' --exclude='/.git' --exclude='node_modules/' --filter=':- .gitignore' --delete-after ${{ env.SRC_DIR }} $SERVER:$DEST_DIR
+          ssh -J ${{ secrets.BASTION }} $SERVER "export PATH=/usr/local/nvs/default/bin:$PATH && cd $DEST_DIR && npm ci"
+          ssh -J ${{ secrets.BASTION }} $SERVER "export PATH=/usr/local/nvs/default/bin:$PATH && cd $DEST_DIR && pm2 stop $APP_NAME && pm2 delete $APP_NAME && pm2 start --name=$APP_NAME doppler -- run npm run start:prod && pm2 save"
+      - name: Check App Status
+        env:
+          SLEEP: ${{ secrets.SLEEP }}
+        run: |
+          sleep $SLEEP
+          ssh -J ${{ secrets.BASTION }} $SERVER "cd $DEST_DIR && nc -z localhost \$(doppler run -- printenv PORT) || (echo -e '\nAPP check status failed.\nStopping App\n\n' && pm2 stop $APP_NAME && exit 1)"
+      - name: Send notification to slack for success
+        run: |
+          curl -X POST -H 'content-type: application/json' \
+          --data '{"attachments":[{"title":"Deployment Done !!  :white_check_mark:","color":"#007500","title_link":"${{ env.TITLE_LINK }}","author_name":"${{ github.actor }}","fields":[{"title":"Repository","value":"${{ github.event.repository.name }}","short":true},{"title":"Branch","value":"${{ env.BRANCH_NAME }}","short":true},{"title":"Deployed To","value":"${{ env.DEPLOY_ENV }}","short":true}],"mrkdwn_in":["text","fields"],"text":"${{ env.COMMIT_MESSAGE }}"}]}' \
+          ${{ secrets.SLACK_WEBHOOK }}
+      - name: Send notification to slack for failure
+        if: failure()
+        run: |
+          curl -X POST -H 'content-type: application/json' \
+          --data '{"attachments":[{"title":"Deployment Failed  :among_us_dead::x:","title_link":"${{ env.TITLE_LINK }}","color":"#9C1A22","author_name":"${{ github.actor }}","fields":[{"title":"Repository","value":"${{ github.event.repository.name }}","short":true},{"title":"Branch","value":"${{ env.BRANCH_NAME }}","short":true},{"title":"Deployed To","value":"${{ env.DEPLOY_ENV }}","short":true}],"mrkdwn_in":["text","fields"],"text":"${{ env.COMMIT_MESSAGE }}"}]}' \
+          ${{ secrets.SLACK_WEBHOOK }}
